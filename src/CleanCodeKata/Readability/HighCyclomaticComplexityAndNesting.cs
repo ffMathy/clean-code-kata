@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace CleanCodeKata.Readability;
@@ -37,13 +39,10 @@ public class UserService
                     //we found an existing user with the given credentials!
                     existingUser = user;
 
-                    if (user.FirstName == firstName)
+                    if (user.FirstName == firstName && user.LastName == lastName)
                     {
-                        if (user.LastName == lastName)
-                        {
-                            //we don't need to update anything!
-                            isIdenticalUser = true;
-                        }
+                        //we don't need to update anything!
+                        isIdenticalUser = true;
                     }
                 }
                 else
@@ -102,6 +101,11 @@ public class UserService
             newUser.LastName = lastName;
 
             _allUsers.Add(newUser);
+            
+            //send out welcome email to user
+            MailMessage mailMessage = new MailMessage("someone@gmail.com", email, "Welcome!", "Welcome " + newUser.FirstName);
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Send(mailMessage);
         }
     }
 }
