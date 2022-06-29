@@ -6,8 +6,9 @@
     - extracting classes
         - too many method arguments
         - too many methods
-    - extracting methods
-        - cyclomatic complexity
+    - cyclomatic complexity and nesting
+        - extracting methods
+        - invert if
     - extracting variables
         - complicated if-statement
         - magic numbers
